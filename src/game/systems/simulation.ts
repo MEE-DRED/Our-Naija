@@ -6,7 +6,7 @@ import type { SimulationReport } from '../../types/simulation';
 import { advancePetitions } from './citizenVoice';
 
 const clamp = (value: number) => Math.max(0, Math.min(100, Math.round(value)));
-const stapleCrops: readonly CropId[] = ['cassava', 'maize', 'rice'];
+const stapleCrops: readonly CropId[] = ['cassava', 'maize', 'rice', 'yam', 'millet', 'sorghum', 'cowpea'];
 
 const activePressure = () => {
   const id = eventStore.getState().active?.eventId;
@@ -32,7 +32,8 @@ export function runMonthlySimulation(turn: number): SimulationReport {
   const pressure = activePressure();
   const resources = before.resources;
   const reserve = stapleCrops.reduce((sum, crop) => sum + before.foodReserve[crop], 0);
-  const processedFood = before.resources.garri + before.resources.milledRice + before.resources.tomatoPaste;
+  const processedFood = before.resources.garri + before.resources.fufu + before.resources.cassavaFlour + before.resources.milledRice +
+    before.resources.packagedRice + before.resources.tomatoPaste + before.resources.tomatoSauce + before.resources.maizeFlour + before.resources.maizeMeal;
   const farmCapacity = communityWorld.farmPlots.length * 4;
   const supply = reserve + stapleCrops.reduce((sum, crop) => sum + resources[crop], 0) + processedFood * 1.4 + farmCapacity;
   const demand = Math.max(1, before.population * 0.12);

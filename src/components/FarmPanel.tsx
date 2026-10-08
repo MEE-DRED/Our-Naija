@@ -35,7 +35,7 @@ export function FarmPanel({ farmId, farmName }: { farmId: string; farmName: stri
         <p className="farm-status"><strong>Status:</strong> Empty</p>
         <h3>Choose crop</h3>
         <div className="crop-list">
-          {crops.map((item) => <button className="crop-choice" key={item.id} onClick={() => plant(item.id)}>
+          {crops.map((item) => <button type="button" className="crop-choice" key={item.id} onClick={() => plant(item.id)}>
             <span className="crop-emoji" aria-hidden>{item.emoji}</span><span><strong>{item.name}</strong><small>{item.role}</small></span><span className="crop-growth">{Math.round(item.growthMs / 1000)}s</span>
           </button>)}
         </div>
@@ -43,7 +43,7 @@ export function FarmPanel({ farmId, farmName }: { farmId: string; farmName: stri
         <p className="farm-status"><strong>{crop.emoji} {crop.name}</strong></p>
         <p>{state.status === 'READY_TO_HARVEST' ? 'Ready to harvest!' : state.status === 'PLANTED' ? 'Recently planted...' : 'Growing...'}</p>
         <div className="meter"><div className="meter-head"><span>{state.status === 'READY_TO_HARVEST' ? 'Ready' : `${progress}% complete`}</span><span>{Math.round(crop.growthMs / 1000)}s</span></div><div className="track" aria-label={`${progress}% grown`}><span style={{ width: `${progress}%` }} /></div></div>
-        {state.status === 'READY_TO_HARVEST' && <button className="btn primary harvest-button" onClick={harvest}>Harvest {crop.name}</button>}
+        {state.status === 'READY_TO_HARVEST' && <button type="button" className="btn primary harvest-button" onPointerUp={(event) => { event.stopPropagation(); harvest(); }} onClick={(event) => event.stopPropagation()}>Harvest {crop.name}</button>}
       </> : null}
       {message && <p className="farm-feedback" role="status">{message}</p>}
       {farmId === 'farm-1' && <button className="btn ghost dark upgrade-button" disabled={buildingLevel >= 2 || player.treasury < 20000} onClick={() => { if (upgradeBuilding('farm-1')) setMessage('Community Farm upgraded · Development +2'); }}>Farm Level {buildingLevel < 2 ? 'Upgrade · ₦20,000' : '2'}</button>}

@@ -20,8 +20,14 @@ import type { CitizenVoiceState } from '../types/citizenVoice';
 import type { PlayerProfileState } from '../types/profile';
 import { regionById } from '../game/data/nigeria';
 import { nigeriaRegions } from '../game/data/nigeria';
+import { marketPrices } from '../game/data/economy';
 
-const emptyResources = (): ResourceInventory => ({ cassava: 0, maize: 0, rice: 0, tomatoes: 0, garri: 0, milledRice: 0, tomatoPaste: 0, maizeFeed: 0 });
+const emptyResources = (): ResourceInventory => ({
+  cassava: 0, maize: 0, rice: 0, tomatoes: 0, yam: 0, millet: 0, sorghum: 0, cowpea: 0, groundnut: 0, soybean: 0,
+  pepper: 0, okra: 0, onion: 0, leafyVegetables: 0, cocoa: 0, oilPalm: 0, cashew: 0,
+  garri: 0, fufu: 0, cassavaFlour: 0, starch: 0, milledRice: 0, packagedRice: 0, tomatoPaste: 0, tomatoSauce: 0,
+  maizeFlour: 0, maizeMeal: 0, maizeFeed: 0,
+});
 const emptyFarm = (): FarmStates => Object.fromEntries(
   communityWorld.farmPlots.map((plot) => [plot.id, { status: 'EMPTY', cropId: null, plantedAt: null }]),
 );
@@ -43,6 +49,8 @@ const savedRole = readSave<LeadershipLevel>('our-naija-role', ACTIVE_LEVEL);
 const savedProfile = readSave<Partial<Pick<PlayerState, 'stateName' | 'lgaName' | 'startingCommunity'>>>('our-naija-profile', {});
 const savedResources = { ...emptyResources(), ...readSave<Partial<ResourceInventory>>('our-naija-resources', {}) };
 const savedFoodReserve = { ...emptyResources(), ...readSave<Partial<ResourceInventory>>('our-naija-food-reserve', {}) };
+const defaultPriceIndex = Object.fromEntries(Object.keys(marketPrices).map((crop) => [crop, 1])) as Record<CropId, number>;
+const savedPriceIndex = { ...defaultPriceIndex, ...readSave<Partial<Record<CropId, number>>>('our-naija-market-prices', {}) };
 
 export type Screen = 'title' | 'loading' | 'playing' | 'error';
 export type Modal = 'none' | 'about' | 'settings' | 'dashboard' | 'profile' | 'politics' | 'lga' | 'events' | 'location' | 'governor' | 'nigeria' | 'president';
@@ -102,7 +110,7 @@ export const economyStore = createStore<{
   notification: null,
   expansions: readSave('our-naija-expansions', {}),
   processing: readSave<ProcessingJob | null>('our-naija-processing', null),
-  priceIndex: readSave<Record<CropId, number>>('our-naija-market-prices', { cassava: 1, maize: 1, rice: 1, tomatoes: 1 }),
+  priceIndex: savedPriceIndex,
 });
 const defaultSimulationReport: SimulationReport = {
   turn: 0, foodSecurity: playerStore.getState().foodSecurity, foodSecurityDelta: 0,
@@ -111,7 +119,7 @@ const defaultSimulationReport: SimulationReport = {
   happiness: playerStore.getState().happiness, happinessDelta: 0,
   approval: 0, approvalDelta: 0, treasury: playerStore.getState().treasury, treasuryDelta: 0,
   mainStrength: 'Community foundations', mainConcern: 'Keep investing in food and services',
-  priceIndex: { cassava: 1, maize: 1, rice: 1, tomatoes: 1 },
+  priceIndex: defaultPriceIndex,
 };
 export const simulationStore = createStore<{ report: SimulationReport }>({
   report: readSave<SimulationReport>('our-naija-simulation-report', defaultSimulationReport),

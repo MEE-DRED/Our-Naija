@@ -58,7 +58,7 @@ export function DashboardModal() {
   const screen = useStore(gameStore, (s) => s.screen);
   const politics = useStore(politicsStore, (s) => s);
   return (
-    <Modal title={p.communityName}>
+    <Modal title={p.communityName} variant="dashboard">
       <dl className="facts">
         <div><dt>State</dt><dd>{p.stateName}</dd></div>
         <div><dt>Starting LGA</dt><dd>{p.lgaName}</dd></div>

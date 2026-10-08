@@ -1,13 +1,13 @@
 import type { ResourceId, CropId } from '../../types/farming';
 
 export const marketPrices: Record<CropId, number> = {
-  cassava: 120,
-  maize: 150,
-  rice: 250,
-  tomatoes: 180,
+  cassava: 120, maize: 150, rice: 250, tomatoes: 180, yam: 280, millet: 170, sorghum: 180,
+  cowpea: 230, groundnut: 260, soybean: 240, pepper: 210, okra: 190, onion: 220,
+  leafyVegetables: 150, cocoa: 420, oilPalm: 360, cashew: 390,
 };
 export const productPrices: Record<Exclude<ResourceId, CropId>, number> = {
-  garri: 220, milledRice: 380, tomatoPaste: 340, maizeFeed: 300,
+  garri: 220, fufu: 230, cassavaFlour: 260, starch: 280, milledRice: 380, packagedRice: 430,
+  tomatoPaste: 340, tomatoSauce: 320, maizeFlour: 280, maizeMeal: 270, maizeFeed: 300,
 };
 export const marketPrice = (cropId: CropId, marketLevel = 1) =>
   Math.round(marketPrices[cropId] * (marketLevel >= 2 ? 1.05 : 1));

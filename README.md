@@ -4,7 +4,7 @@ A browser-based Nigerian strategy and city-building game where agriculture power
 
 > Build your land. Feed your people. Lead your nation.
 
-**Status:** Cycle 14 (living community, citizen voice, responsive government, sound, player profile, and governance streaks). See `CYCLE_14_COMPLETE.md`.
+**Status:** Cycle 15B (responsive UI stabilization plus expanded crops and functional processing). See `CYCLE_15B_COMPLETE.md`.
 
 ## Requirements
 - Node.js 18.18 or newer
@@ -50,6 +50,8 @@ npm run preview
 - On first play, select a permanent State, LGA, and starting community. Open Wahala to review active events and governance history, then use Advance month to encounter controlled, condition-based challenges and opportunities.
 - Citizen petitions arise from service pressure. Respond through the petition lifecycle to build trust, or ignore petitions and accept approval consequences.
 - Open Profile to review your administration, political history, achievements, citizen trust, daily governance priority, and soft Governance Streak. Audio can be muted or balanced by layer from Settings.
+- Farm, market, service, infrastructure, and processing panels use the same shared actions for mouse and touch. Market and dashboard surfaces are bounded and dismissible on desktop and mobile.
+- Agriculture now supports 17 centralized crops and multi-option cassava, rice, tomato, and maize processing through the existing inventory, electricity, market, and time systems.
 - When Chairman requirements are met, open Governor to review eligibility, contest the fictional State Governor election, and manage state-wide projects for the original State.
 - Open Nigeria from the HUD to browse all 36 States, FCT, representative LGAs, and communities. Other places are viewable but remain outside your current political authority.
 - Use the compact menu button to open the responsive Home, Farms, Market, Services, Politics, and Events side panel. Farms, Market, Clinic, and School actions focus the world camera on the relevant entity.

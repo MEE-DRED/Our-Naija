@@ -1,6 +1,7 @@
 import type { ProductId, CropId } from './farming';
 
 export interface ProcessingRecipe {
+  recipeId: string;
   facilityId: string;
   name: string;
   input: CropId;

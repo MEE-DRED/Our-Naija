@@ -1,5 +1,5 @@
-export type CropId = 'cassava' | 'maize' | 'rice' | 'tomatoes';
-export type ProductId = 'garri' | 'milledRice' | 'tomatoPaste' | 'maizeFeed';
+export type CropId = 'cassava' | 'maize' | 'rice' | 'tomatoes' | 'yam' | 'millet' | 'sorghum' | 'cowpea' | 'groundnut' | 'soybean' | 'pepper' | 'okra' | 'onion' | 'leafyVegetables' | 'cocoa' | 'oilPalm' | 'cashew';
+export type ProductId = 'garri' | 'fufu' | 'cassavaFlour' | 'starch' | 'milledRice' | 'packagedRice' | 'tomatoPaste' | 'tomatoSauce' | 'maizeFlour' | 'maizeMeal' | 'maizeFeed';
 export type ResourceId = CropId | ProductId;
 export type FarmStatus = 'EMPTY' | 'PLANTED' | 'GROWING' | 'READY_TO_HARVEST';
 
@@ -12,6 +12,11 @@ export interface CropDefinition {
   harvestAmount: number;
   value: number;
   futureProducts: string;
+  category?: string;
+  waterRequirement?: number;
+  baseMarketPrice?: number;
+  foodValue?: number;
+  preferredRegions?: string[];
 }
 
 export interface FarmState {

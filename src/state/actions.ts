@@ -287,22 +287,22 @@ export const addToFoodReserve = (cropId: CropId, quantity: number) => {
   return true;
 };
 
-export const startProcessing = (facilityId: string) => {
-  const recipe = recipeFor(facilityId);
+export const startProcessing = (facilityId: string, recipeId?: string) => {
+  const recipe = recipeFor(facilityId, recipeId);
   const player = playerStore.getState();
   const economy = economyStore.getState();
   if (!recipe || economy.processing || player.resources[recipe.input] < recipe.inputQuantity || player.treasury < recipe.cost ||
       player.electricityCapacity - player.electricityDemand < recipe.electricityRequired) return false;
   const resources = { ...player.resources, [recipe.input]: player.resources[recipe.input] - recipe.inputQuantity };
   playerStore.setState({ resources, treasury: player.treasury - recipe.cost, electricityDemand: player.electricityDemand + recipe.electricityRequired, jobs: player.jobs + recipe.jobs });
-  economyStore.setState({ processing: { facilityId, recipeId: facilityId, startedAt: Date.now() } });
+  economyStore.setState({ processing: { facilityId, recipeId: recipe.recipeId, startedAt: simulationNow() } });
   savePlayer(); saveEconomy(); notify(`${recipe.name} started`);
   return true;
 };
 
 export const processingState = (now = simulationNow()) => {
   const job = economyStore.getState().processing;
-  const recipe = job ? recipeFor(job.facilityId) : undefined;
+  const recipe = job ? recipeFor(job.facilityId, job.recipeId) : undefined;
   if (!job || !recipe) return { job: null, recipe: undefined, progress: 0, ready: false };
   const progress = Math.min(100, Math.floor(((now - job.startedAt) / recipe.processingMs) * 100));
   return { job, recipe, progress, ready: progress >= 100 };
